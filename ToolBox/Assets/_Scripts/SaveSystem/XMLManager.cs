@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using System.Xml;
-using System.Xml.Serialization;
 using System.IO; //file management
 using System;
+using System.Xml.Linq;
 
 [DefaultExecutionOrder(1)]
 public class XMLManager : MonoBehaviour
 {
+    public bool DebugSerialize;
+
     string _xmlPath;
 
     #region Singleton
@@ -34,84 +35,41 @@ public class XMLManager : MonoBehaviour
 
     private void Start()
     {
-        SerializeDB(Databases[0]);
+
+    }
+
+    private void Update()
+    {
+        if(DebugSerialize)
+        {
+            DebugSerialize = false;
+
+            Serialize(new TestData(new XDocument()));
+
+            if (Databases.Count > 0)
+                SerializeDB(Databases[0]);
+        }
     }
 
     public void Serialize(Data data)
     {
-        string newPath = _xmlPath + data.GetType().Name + ".xml";
+        XDocument doc = new XDocument(new XComment("TestComment"));
 
-        XmlSerializer serializer = new XmlSerializer(data.GetType());
-        if (File.Exists(newPath))
-            File.Delete(newPath);
-        FileStream stream = new FileStream(newPath, FileMode.Create);
-        serializer.Serialize(stream, data);
-        stream.Close();
-    }
+        doc.Add(data.Serialize());
 
-    public void Serialize<T>() where T:Data
-    {
-        Type type = typeof(T);
+        string newPath = _xmlPath + data.GetType().Name+".xml";
 
-        switch(type)
-        {
-            //write different data to write and link them to their method
-        }
+        doc.Save(newPath);
     }
 
     public void SerializeDB(Database db)
     {
-        if (db.Datas.Count == 0)
-            return;
+        XDocument doc = new XDocument(new XComment("TestComment"));
+
+        doc.Add(db.Serialize());
 
         string newPath = _xmlPath + db.GetType().Name + ".xml";
 
-        XmlSerializer serializer = new XmlSerializer(db.GetType());
-
-        XmlWriter writer = XmlWriter.Create(newPath);
-
-/*        writer.WriteStartElement(db.GetType().Name);
-
-        foreach (Data data in db.Datas)
-        {
-            writer.WriteStartElement("data");
-            serializer.Serialize(writer, data);
-            writer.WriteEndElement();
-
-            writer.WriteEndElement();
-        }
-
-        writer.Close();*/
+        doc.Save(newPath);
     }
-
-    /* public void SerializeDB(Database db)      //DICTIONNARIES
- {
-     Dictionary<string, Data> datas;
-     if (datas.Count == 0)
-         return;
-
-     string newPath = _xmlPath + db.GetType().Name + ".xml";
-
-     XmlSerializer keySerializer = new XmlSerializer(datas.Keys.GetType());
-     XmlSerializer valueSerializer = new XmlSerializer(datas.Values.GetType());
-
-     XmlWriter writer = XmlWriter.Create(newPath);
-
-     foreach(KeyValuePair<string,Data> data in datas)
-     {
-         writer.WriteStartElement(db.name);
-
-         writer.WriteStartElement("key");
-         keySerializer.Serialize(writer, data.Key);
-         writer.WriteEndElement();
-
-         writer.WriteStartElement("value");
-         valueSerializer.Serialize(writer, data.Value);
-         writer.WriteEndElement();
-
-         writer.WriteEndElement();
-     }
-
-     writer.Close();
- }*/
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
+
 
 public abstract class Database : MonoBehaviour
 {
+    //insert singleton
 
     public TextAsset TextDefinition = null;
-
-    public List<Data> Datas { get; private set; }
 
     public virtual void Awake()
     {
@@ -22,5 +23,7 @@ public abstract class Database : MonoBehaviour
             return;
         }
     }
+
+    public abstract XElement Serialize();
 
 }

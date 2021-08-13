@@ -328,12 +328,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextDefinition: {fileID: 0}
   Datas:
-  - Hi: slt
-    Num: 1
-  - Hi: coucou
-    Num: 2
-  - Hi: bite
-    Num: 19
+  - Num: 1
+    Txt: slt
+  - Num: 2
+    Txt: cc
+  - Num: 3
+    Txt: cul
 --- !u!114 &987016455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9929633c056796a4491d5a8a34875010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugSerialize: 0
   Databases:
   - {fileID: 987016454}
 --- !u!4 &987016456
