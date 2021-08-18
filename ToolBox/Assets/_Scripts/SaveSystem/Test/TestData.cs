@@ -15,16 +15,28 @@ public class TestData : Data
 
     public override void Deserialize(XContainer container)
     {
-        Id = "Test";
-        //throw new System.NotImplementedException();
+        XElement element = container as XElement;
+
+        XAttribute id = element.Attribute("Id");
+        Id = id.Value;
+
+        XElement num = element.Element("Num");
+
+        if (int.TryParse(num.Value, out int result))
+            Num = result;
+        else
+            return;
+
+        XElement txt = element.Element("Txt");
+        Txt = txt.Value;
     }
 
     public override XElement Serialize()
     {
-        if (Id == null)
-            Id = "SampleName";
+        if (string.IsNullOrEmpty(Id))
+            Id = "SampleId";
 
-        return new XElement(Id,
+        return new XElement("Data",new XAttribute("Id",Id),
             new XElement("Num", Num),
             new XElement("Txt", Txt));
     }

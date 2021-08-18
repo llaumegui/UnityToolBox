@@ -6,12 +6,15 @@ using System.IO; //file management
 using System;
 using System.Xml.Linq;
 
-[DefaultExecutionOrder(1)]
+using UnityEditor;
+
+[DefaultExecutionOrder(-1)]
 public class XMLManager : MonoBehaviour
 {
     public bool DebugSerialize;
 
-    string _xmlPath;
+    string _dataPath;
+    string _localPath;
 
     #region Singleton
     public static XMLManager Instance { get; private set; }
@@ -25,10 +28,13 @@ public class XMLManager : MonoBehaviour
         else
             Instance = this;
 
-         _xmlPath = $"{Application.persistentDataPath}/XMLSaves/";
+        _dataPath = $"{Application.persistentDataPath}/XMLSaves/";
+        _localPath = $"{Application.dataPath}/Saves/";
 
-        if (!Directory.Exists(_xmlPath))
-            Directory.CreateDirectory(_xmlPath);
+        if (!Directory.Exists(_dataPath))
+            Directory.CreateDirectory(_dataPath);
+        if (!Directory.Exists(_localPath))
+            Directory.CreateDirectory(_localPath);
     }
     #endregion
 
@@ -47,29 +53,50 @@ public class XMLManager : MonoBehaviour
             Serialize(new TestData(new XDocument()));
 
             if (Databases.Count > 0)
-                SerializeDB(Databases[0]);
+                Serialize(Databases[0]);
         }
     }
 
-    public void Serialize(Data data)
+    public void Serialize(Data data, bool dataPath = false)
     {
         XDocument doc = new XDocument(new XComment("TestComment"));
 
         doc.Add(data.Serialize());
 
-        string newPath = _xmlPath + data.GetType().Name+".xml";
+        string newPath = string.Empty;
+
+        if (dataPath)
+            newPath = _dataPath + data.GetType().Name + ".xml";
+        else
+            newPath = _localPath + data.GetType().Name + ".xml";
 
         doc.Save(newPath);
+
+        Refresh();
     }
 
-    public void SerializeDB(Database db)
+    public void Serialize(Database db, bool dataPath = false)
     {
         XDocument doc = new XDocument(new XComment("TestComment"));
 
         doc.Add(db.Serialize());
 
-        string newPath = _xmlPath + db.GetType().Name + ".xml";
+        string newPath = string.Empty;
+
+        if (dataPath)
+            newPath = _dataPath + db.GetType().Name + ".xml";
+        else
+            newPath = _localPath + db.GetType().Name + ".xml";
 
         doc.Save(newPath);
+
+        Refresh();
+    }
+
+    void Refresh()
+    {
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
     }
 }

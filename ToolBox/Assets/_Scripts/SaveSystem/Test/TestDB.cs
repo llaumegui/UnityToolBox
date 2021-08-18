@@ -31,4 +31,23 @@ public class TestDB : Database
 
         return null;
     }
+
+    public override void Deserialize()
+    {
+        base.Deserialize();
+
+        Datas = new List<TestData>();
+
+        XDocument doc = XDocument.Parse(TextDefinition.text);
+
+        XElement dataElements = doc.Element("Root");
+
+        foreach(XElement element in dataElements.Elements("Data"))
+        {
+            TestData data = new TestData(element);
+            Datas.Add(data);
+        }
+
+        Debug.Log($"Deserialized {Datas.Count} in {this.GetType().Name}");
+    }
 }

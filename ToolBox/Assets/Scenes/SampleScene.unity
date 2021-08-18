@@ -326,14 +326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65941b9a6a756b543bee692364f3504d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextDefinition: {fileID: 0}
-  Datas:
-  - Num: 1
-    Txt: slt
-  - Num: 2
-    Txt: cc
-  - Num: 3
-    Txt: cul
+  TextDefinition: {fileID: 4900000, guid: c2a9a5cde841d234783d5dc23e7bf093, type: 3}
+  _serialize: 0
+  Datas: []
 --- !u!114 &987016455
 MonoBehaviour:
   m_ObjectHideFlags: 0

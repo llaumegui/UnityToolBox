@@ -3,27 +3,76 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-
 public abstract class Database : MonoBehaviour
 {
     //insert singleton
 
     public TextAsset TextDefinition = null;
 
+    [SerializeField]protected bool _serialize = false;
+
     public virtual void Awake()
     {
-        Deserialize();
+        if (!_serialize)
+            Deserialize();
+        else
+        {
+            _serialize = false;
+
+            XMLManager.Instance.Serialize(this);
+        }
+
     }
 
     public virtual void Deserialize()
     {
         if (TextDefinition == null)
         {
-            Debug.LogError($"Failed to find TextAsset of {this.GetType().Name}");
+            Debug.LogError($"Unable to find TextAsset of {this.GetType().Name}");
             return;
         }
     }
 
     public abstract XElement Serialize();
+
+
+    #region Templates
+    /*public override XElement Serialize()
+    {
+        if (List.Count > 0)
+        {
+            XElement e = new XElement("Root");
+
+            for (int i = 0; i < List.Count; i++)
+            {
+                e.Add(Datas[i].Serialize());
+            }
+
+            return e;
+        }
+
+        return null;
+    }*/
+
+    /*
+    public override void Deserialize()
+    {
+        base.Deserialize();
+
+        Datas = new List<TestData>();
+
+        XDocument doc = XDocument.Parse(TextDefinition.text);
+
+        XElement dataElements = doc.Element("Root");
+
+        foreach(XElement element in dataElements.Elements("Data"))
+        {
+            TestData data = new TestData(element);
+            Datas.Add(data);
+        }
+
+        Debug.Log($"Deserialized {Datas.Count} in {this.GetType().Name}");
+    }*/
+    #endregion
 
 }
