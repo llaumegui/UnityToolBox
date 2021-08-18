@@ -18,6 +18,7 @@ public class XMLManager : MonoBehaviour
 
     #region Singleton
     public static XMLManager Instance { get; private set; }
+    #endregion
 
     public List<Database> Databases;
 
@@ -36,13 +37,6 @@ public class XMLManager : MonoBehaviour
         if (!Directory.Exists(_localPath))
             Directory.CreateDirectory(_localPath);
     }
-    #endregion
-
-
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
@@ -50,10 +44,6 @@ public class XMLManager : MonoBehaviour
         {
             DebugSerialize = false;
 
-            Serialize(new TestData(new XDocument()));
-
-            if (Databases.Count > 0)
-                Serialize(Databases[0]);
         }
     }
 

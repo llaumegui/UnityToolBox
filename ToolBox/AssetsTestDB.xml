@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--TestComment-->
+<Root>
+  <Data Id="SampleId">
+    <Num>1</Num>
+    <Txt>caca</Txt>
+  </Data>
+  <Data Id="SampleId">
+    <Num>2</Num>
+    <Txt>Estebanos</Txt>
+  </Data>
+</Root>

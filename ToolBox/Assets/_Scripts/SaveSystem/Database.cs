@@ -11,6 +11,8 @@ public abstract class Database : MonoBehaviour
 
     [SerializeField]protected bool _serialize = false;
 
+    public List<Data> Datas;
+
     public virtual void Awake()
     {
         if (!_serialize)
@@ -34,6 +36,18 @@ public abstract class Database : MonoBehaviour
     }
 
     public abstract XElement Serialize();
+
+    [ContextMenu("Serialize List")]
+    public virtual void CallSerializer()
+    {
+        if(Application.isEditor)
+        {
+            Debug.LogError("You need to be in Play Mode in Order to Serialize");
+            return;
+        }
+
+        XMLManager.Instance.Serialize(this);
+    }
 
 
     #region Templates
