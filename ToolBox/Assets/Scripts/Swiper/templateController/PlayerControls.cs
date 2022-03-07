@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/_Scripts/Swiper/templateController/PlayerControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Swiper/templateController/PlayerControls.inputactions'
 
 using System;
 using System.Collections;
