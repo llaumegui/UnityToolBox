@@ -65,4 +65,14 @@ public class LocalizationManager : MonoBehaviour
     {
         _localizers.Add(text);
     }
+
+
+#if UNITY_EDITOR
+    [ContextMenu("Sort")]
+    public void Sort()
+    {
+        LocalizationSystem.Sort();
+    }
+
+#endif
 }

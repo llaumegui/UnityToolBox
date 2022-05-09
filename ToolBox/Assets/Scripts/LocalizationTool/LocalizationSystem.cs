@@ -93,5 +93,17 @@ public class LocalizationSystem
         UpdateDictionaries();
     }
 
+    public static void Sort()
+    {
+        if (_csvLoader == null)
+            _csvLoader = new CSVLoader();
+
+        _csvLoader.LoadCSV();
+        _csvLoader.Sort();
+        _csvLoader.LoadCSV();
+
+        UpdateDictionaries();
+    }
+
 #endif
 }

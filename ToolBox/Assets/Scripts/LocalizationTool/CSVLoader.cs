@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System;
 
 public class CSVLoader
 {
@@ -145,6 +146,22 @@ public class CSVLoader
             return true;
         else
             return false;
+    }
+
+    public void Sort()
+    {
+        string[] file = _csvFile.text.Split(_lineSeparator);
+        string result = file[0];
+
+        file = file.Skip(1).ToArray();
+
+        Array.Sort(file, (x, y) => String.Compare(x, y));
+        //result += _lineSeparator.ToString();
+        result += string.Join(_lineSeparator.ToString(), file);
+
+        File.WriteAllText(path, result);
+        UnityEditor.AssetDatabase.Refresh();
+
     }
 
 #endif
