@@ -11,7 +11,7 @@ public class ButtonLocalizationExample : MonoBehaviour
     {
         if (TryGetComponent(out LocalizationManager script))
             if (_french)
-                script.Language = Language.French;
+                script.Language = Language.Français;
             else
                 script.Language = Language.English;
     }

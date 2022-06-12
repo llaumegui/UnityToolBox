@@ -17,8 +17,11 @@ public class TextLocalizer : MonoBehaviour
 
     private void Start()
     {
-        Register();
-        RefreshValue();
+        if (LocalizationManager.Instance)
+        {
+            Register();
+            RefreshValue();
+        }
 
         CheckComponents();
     }

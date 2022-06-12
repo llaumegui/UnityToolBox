@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum Language
 {
-    English, French
+    English, Français
 }
 
 public class LocalizationSystem
@@ -48,7 +48,7 @@ public class LocalizationSystem
             case Language.English:
                 _localisedEN.TryGetValue(key, out value);
                 break;
-            case Language.French:
+            case Language.Français:
                 _localisedFR.TryGetValue(key, out value);
                 break;
         }

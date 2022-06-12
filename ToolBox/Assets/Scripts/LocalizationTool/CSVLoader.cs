@@ -72,7 +72,7 @@ public class CSVLoader
 #if UNITY_EDITOR
     public void Add(string key,string value)
     {
-        string appended = string.Format("\n\"{0}\",\"{1}\",\"\"", key, value);
+        string appended = string.Format("\n\"{0}\",\"{1}\",\"{2}\"", key, value, "...");
         File.AppendAllText(path, appended);
 
         UnityEditor.AssetDatabase.Refresh();
